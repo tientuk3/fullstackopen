@@ -92,7 +92,8 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-  
+
+
     const nimiObject = {name: newName, number: newNumber}
     setNewName('')
     setNewNumber('')
@@ -119,15 +120,15 @@ const App = () => {
                     setPersons(persons.filter(person => person.id !== found.id))
                     shortMessage({ text: `${nimiObject.name} tietoja ei enää ole olemassa`, color: 'red' })
                 })
-    
-        } else {
-            shortMessage( { text: `${nimiObject.name} on jo listalla`, color: 'red' } )
         }
+    
+    } else {
+        shortMessage( { text: `${nimiObject.name} on jo listalla`, color: 'red' } )
     }
+    
   }
 
   const poista = (person) => {
-    console.log(person)
     if (window.confirm('Haluatko varmasti poistaa ' + person.name + ' listalta?') === true) {
         database
             .remove(person.id)

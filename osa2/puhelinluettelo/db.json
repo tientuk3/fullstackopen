@@ -11,19 +11,14 @@
       "id": 4
     },
     {
-      "name": "trööt prälälä",
-      "number": "123000",
+      "name": "Tuukka",
+      "number": "12345",
       "id": 5
     },
     {
-      "name": "tuukka",
-      "number": "12345",
+      "name": "Mikko",
+      "number": "101010",
       "id": 6
-    },
-    {
-      "name": "testi",
-      "number": "123123",
-      "id": 7
     }
   ]
 }

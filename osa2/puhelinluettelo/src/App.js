@@ -93,7 +93,6 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
 
-
     const nimiObject = {name: newName, number: newNumber}
     setNewName('')
     setNewNumber('')
@@ -104,6 +103,9 @@ const App = () => {
                 setPersons(persons.concat(response.data))
                 shortMessage({ text: 'Lisäys onnistui', color: 'green' })
             })
+            .catch(error => {
+                shortMessage({ text: error.response.data.error, color: 'red' })
+            })
 
     } else if (persons.some(person => person.name === nimiObject.name && person.number !== nimiObject.number)) {
         if (window.confirm('Päivitetäänkö numero henkilölle ' + nimiObject.name + '?')) {
@@ -113,12 +115,16 @@ const App = () => {
             database
                 .update(changedObject)
                 .then(response => {
-                    setPersons(persons.map(person => person.name !== nimiObject.name ? person : response.data))
-                    shortMessage({ text: 'Päivitys onnistui', color: 'green' })
+                    if (response.data.name) {
+                        setPersons(persons.map(person => person.name !== nimiObject.name ? person : response.data))
+                        shortMessage({ text: 'Päivitys onnistui', color: 'green' })
+                    } else {
+                        setPersons(persons.filter(person => person.id !== found.id))
+                        shortMessage({ text: `${nimiObject.name} tietoja ei enää ole olemassa`, color: 'red' })
+                    }
                 })
                 .catch(error => {
-                    setPersons(persons.filter(person => person.id !== found.id))
-                    shortMessage({ text: `${nimiObject.name} tietoja ei enää ole olemassa`, color: 'red' })
+                    shortMessage({ text: error.response.data.error, color: 'red' })
                 })
         }
     

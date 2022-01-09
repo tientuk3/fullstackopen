@@ -16,6 +16,30 @@ const create = async newBlog => {
   return response.data
 }
 
+const update = async (blog) => {
+  blog.likes = blog.likes + 1
+
+  const url = baseUrl + '/' + blog.id
+
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const response = await axios.put(url, blog, config)
+  return response.data
+}
+
+const remove = async (blog) => {
+  const url = baseUrl + '/' + blog.id
+
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const response = await axios.delete(url, config, blog)
+  return response
+}
+
 const setToken = newToken => {
   token = 'bearer ' + newToken
 }
@@ -27,6 +51,8 @@ const clearToken = () => {
 export default {
   getAll,
   create,
+  update,
+  remove,
   setToken,
   clearToken
 }

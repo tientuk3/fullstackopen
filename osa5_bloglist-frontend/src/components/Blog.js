@@ -25,7 +25,7 @@ const Blog = ({ blog, handleIncrementLikes, handleDeletePost, username }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div id='blogi' style={blogStyle}>
       <div>
         {blog.title} by {blog.author} <button onClick={handleSetViewState}>{viewState ? 'Piilota tiedot' : 'Näytä tiedot'}</button>
       </div>

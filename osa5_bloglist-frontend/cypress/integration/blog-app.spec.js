@@ -43,6 +43,7 @@ describe('Blog app', function() {
       cy.get('form').contains('Kirjaudu sisään').click()
       cy.get('.viestiRed').contains('Väärä käyttäjätunnus tai salasana')
       cy.get('.viestiRed').should('have.css', 'border-color', 'rgb(255, 0, 0)')
+      cy.get('Kirjaudu ulos').should('not.exist')
     })
   })
 
@@ -74,6 +75,7 @@ describe('Blog app', function() {
       cy.contains('Tykkää').click()
       cy.get('.viestiGreen').contains('Tykkäsit blogista')
       cy.get('.viestiGreen').should('have.css', 'border-color', 'rgb(0, 128, 0)')
+      cy.contains('Backend-blogi').parent().contains('32 tykkäystä')
     })
 
     it('Blogin poistaminen', function() {

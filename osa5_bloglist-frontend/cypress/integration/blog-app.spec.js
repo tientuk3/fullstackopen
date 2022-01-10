@@ -84,8 +84,7 @@ describe('Blog app', function() {
       cy.contains('Lähetä').click()
       cy.get('.viestiGreen').contains('Lisäsit uuden blogin')
       cy.get('.viestiGreen').should('have.css', 'border-color', 'rgb(0, 128, 0)')
-      cy.contains('Cypressin lisäämä blogi')
-      cy.contains('Näytä tiedot').click()
+      cy.contains('Cypressin lisäämä blogi').contains('Näytä tiedot').click()
       cy.contains('Poista').click()
       cy.get('Cypressin lisäämä blogi').should('not.exist')
       cy.get('Poista').should('not.exist')
@@ -102,7 +101,7 @@ describe('Blog app', function() {
     })
 
     it('Blogit oikeassa järjestyksessä', function() {
-      cy.createBlog({
+      cy.createBlog({ // create four blogs to initialize the test
         title: 'Keskinkertainen blogi',
         author: 'test',
         url: 'test_url',

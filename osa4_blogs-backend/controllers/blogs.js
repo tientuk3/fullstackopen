@@ -38,6 +38,7 @@ router.post('/', middleware.userExtractor, async (request, response) => {
   } else {
     if (!blog.likes) { blog.likes = 0 }
     const savedblog = await blog.save()
+    savedblog.populate('user', { username: 1, name: 1 })
     request.user.blogs = request.user.blogs.concat(savedblog._id)
     await request.user.save()
     response.status(201).json(savedblog.toJSON())
@@ -83,11 +84,17 @@ router.put('/:id', middleware.userExtractor, async (request, response) => {
   const blog = await Blog.findById(request.params.id)
   if (!blog) {
     return response.status(400).end()
+  /*
   } else if ( blog.user.toString() === decodedToken.id.toString() ) {
     const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, newContent, { new: true, runValidators: true })
     response.json(updatedBlog.toJSON()) // onnistui
   } else {
     response.status(401).json({ error: 'ei oikeuksia operaatioon' }) // väärä käyttäjä
+  } // error...
+  */
+  } else {
+    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, newContent, { new: true, runValidators: true })
+    response.json(updatedBlog.toJSON()) // onnistui
   } // error...
 
 })

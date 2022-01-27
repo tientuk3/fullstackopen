@@ -1,0 +1,17 @@
+.viestiGreen {
+  border: 5px solid green;
+  border-radius: 5px;
+  padding: 15px;
+  font-size: medium;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.viestiRed {
+  border: 5px solid red;
+  border-radius: 5px;
+  padding: 15px;
+  font-size: medium;
+  margin-bottom: 15px;
+  font-weight: 500;
+}

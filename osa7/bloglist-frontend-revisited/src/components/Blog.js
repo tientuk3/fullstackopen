@@ -1,6 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
+//import { useDispatch, useSelector } from 'react-redux'
+//import { likeExisting } from '../reducers/blogReducer'
+import { useState } from 'react'
+import { setNotification } from '../reducers/ilmoitusReducer'
+import { useDispatch } from 'react-redux'
+import { likeExisting } from '../reducers/blogReducer'
+import blogService from '../services/blogs'
 
-const Blog = ({ blog, handleIncrementLikes, handleDeletePost, username }) => {
+
+const Blog = ({ blog, handleDeletePost, username }) => {
+  const dispatch = useDispatch()
+
   const blogStyle = {
     paddingTop: 5,
     paddingBottom: 3,
@@ -10,18 +20,27 @@ const Blog = ({ blog, handleIncrementLikes, handleDeletePost, username }) => {
     marginBottom: 5
   }
 
-  const [viewState, setViewState] = useState(false)
+  const [viewState, setViewState] = useState(false) // for now this shall be a local component state
   const handleSetViewState = () => {
     setViewState(!viewState)
   }
 
-  const incrementLikes = (event) => { // lisää tykkäys
-    event.preventDefault()
-    handleIncrementLikes(blog)
-  }
   const deletePost = (event) => { // poista listaus
     event.preventDefault()
     handleDeletePost(blog)
+    dispatch(setNotification({ text: 'Poistit blogin', color: 'green', t: 3 }))
+  }
+
+  const incrementLikes = async (event) => {
+    event.preventDefault()
+
+    try {
+      const responseBlog = await blogService.update(blog)
+      dispatch(likeExisting(responseBlog))
+      dispatch(setNotification({ text: 'Tykkäsit blogista', color: 'green', t: 3 }))
+    } catch (exception) {
+      dispatch(setNotification({ text: 'Ei onnistunut!!', color: 'red', t: 3 }))
+    }
   }
 
   return (

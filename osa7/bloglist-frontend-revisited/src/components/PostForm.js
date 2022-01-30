@@ -1,6 +1,13 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { createNew } from '../reducers/blogReducer'
+import { setNotification } from '../reducers/ilmoitusReducer'
+import blogService from '../services/blogs'
 
-const PostForm = ({ createBlog }) => {
+const PostForm = () => {
+  const dispatch = useDispatch()
+
+  // copmonent local states
   const [newBlogTitle, setNewBlogTitle] = useState('')
   const [newBlogAuthor, setNewBlogAuthor] = useState('')
   const [newBlogUrl, setNewBlogUrl] = useState('')
@@ -21,13 +28,21 @@ const PostForm = ({ createBlog }) => {
     setNewBlogUrl('')
   }
 
-  const addBlog = (event) => {
+  const addBlog = async (event) => {
     event.preventDefault()
-    createBlog({
-      title: newBlogTitle,
-      author: newBlogAuthor,
-      url: newBlogUrl,
-    })
+
+    try {
+      const response = await blogService.create({
+        title: newBlogTitle,
+        author: newBlogAuthor,
+        url: newBlogUrl,
+      })
+
+      dispatch(createNew(response))
+      dispatch(setNotification({ text: 'Lisäsit blogin', color: 'green', t: 3 }))
+    } catch (exception) {
+      dispatch(setNotification( { text: 'Ei onnistuntut!!', color: 'red', t: 3 }))
+    }
     clearBlogForm()
   }
 

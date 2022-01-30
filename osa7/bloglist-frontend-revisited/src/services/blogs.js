@@ -2,12 +2,12 @@ import axios from 'axios'
 const baseUrl = '/api/blogs'
 let token = null
 
-const getAll = () => {
+const getAll = () => { // all blogs
   const request = axios.get(baseUrl)
   return request.then(response => response.data)
 }
 
-const create = async newBlog => {
+const create = async newBlog => { // post new
   const config = {
     headers: { Authorization: token },
   }
@@ -16,7 +16,7 @@ const create = async newBlog => {
   return response.data
 }
 
-const update = async (blog) => {
+const update = async (blog) => { // update listing (for now means increment likes)
   const modifiedBlog = { ...blog, likes: blog.likes + 1 }
 
   const url = baseUrl + '/' + blog.id
@@ -29,7 +29,7 @@ const update = async (blog) => {
   return response.data
 }
 
-const remove = async (blog) => {
+const remove = async (blog) => { // delete listing
   const url = baseUrl + '/' + blog.id
 
   const config = {

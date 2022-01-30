@@ -37,10 +37,10 @@ router.post('/', middleware.userExtractor, async (request, response) => {
     response.status(400).end()
   } else {
     if (!blog.likes) { blog.likes = 0 }
-    const savedblog = await blog.save()
+    const savedblog = await blog.save() // tallennetaan itse blogilistaus
     savedblog.populate('user', { username: 1, name: 1 })
     request.user.blogs = request.user.blogs.concat(savedblog._id)
-    await request.user.save()
+    await request.user.save() // tallenetaan tieto blogista myös sen lisänneen käyttäjän yhteyteen
     response.status(201).json(savedblog.toJSON())
   }
 
@@ -93,7 +93,9 @@ router.put('/:id', middleware.userExtractor, async (request, response) => {
   } // error...
   */
   } else {
-    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, newContent, { new: true, runValidators: true })
+    const updatedBlog = await Blog
+      .findByIdAndUpdate(request.params.id, newContent, { new: true, runValidators: true })
+      .populate('user', { username: 1, name: 1 })
     response.json(updatedBlog.toJSON()) // onnistui
   } // error...
 

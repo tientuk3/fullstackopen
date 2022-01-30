@@ -3,7 +3,7 @@
 describe('Blog app', function() {
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3003/api/tests/reset')
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:3000/')
 
     const validUser = {
       username: 'tuukka',
@@ -58,7 +58,7 @@ describe('Blog app', function() {
       cy.get('#author').type('Kirjoittaja')
       cy.get('#url').type('www.blogiblogi.com')
       cy.contains('Lähetä').click()
-      cy.get('.viestiGreen').contains('Lisäsit uuden blogin')
+      cy.get('.viestiGreen').contains('Lisäsit blogin')
       cy.get('.viestiGreen').should('have.css', 'border-color', 'rgb(0, 128, 0)')
       cy.contains('Cypressin lisäämä blogi')
     })
@@ -84,7 +84,7 @@ describe('Blog app', function() {
       cy.get('#author').type('Kirjoittaja')
       cy.get('#url').type('www.blogiblogi.com')
       cy.contains('Lähetä').click()
-      cy.get('.viestiGreen').contains('Lisäsit uuden blogin')
+      cy.get('.viestiGreen').contains('Lisäsit blogin')
       cy.get('.viestiGreen').should('have.css', 'border-color', 'rgb(0, 128, 0)')
       cy.contains('Cypressin lisäämä blogi').contains('Näytä tiedot').click()
       cy.contains('Poista').click()

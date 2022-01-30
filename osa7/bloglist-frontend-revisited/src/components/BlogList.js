@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteExisting, likeExisting } from '../reducers/blogReducer'
 import Blog from './Blog'
 
-
 const BlogList = ({ username }) => {
   const dispatch = useDispatch()
   const blogs = useSelector(state => state.blogs)

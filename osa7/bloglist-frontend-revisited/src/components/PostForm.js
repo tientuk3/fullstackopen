@@ -3,11 +3,12 @@ import { useDispatch } from 'react-redux'
 import { createNew } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/ilmoitusReducer'
 import blogService from '../services/blogs'
+import { Button, Typography } from '@material-ui/core'
 
-const PostForm = () => {
+const PostForm = ({ hide }) => {
   const dispatch = useDispatch()
 
-  // copmonent local states
+  // component local states
   const [newBlogTitle, setNewBlogTitle] = useState('')
   const [newBlogAuthor, setNewBlogAuthor] = useState('')
   const [newBlogUrl, setNewBlogUrl] = useState('')
@@ -44,11 +45,12 @@ const PostForm = () => {
       dispatch(setNotification( { text: 'Ei onnistuntut!!', color: 'red', t: 3 }))
     }
     clearBlogForm()
+    hide()
   }
 
   return (
     <div>
-      <h3>Lisää uusi blogi</h3>
+      <Typography variant='h5'>Lisää uusi blogi</Typography>
 
       <form onSubmit={addBlog}>
         <div>
@@ -75,7 +77,7 @@ const PostForm = () => {
             onChange={handleBlogUrl}
           />
         </div>
-        <button type="submit">Lähetä</button>
+        <Button type="submit">Lähetä</Button>
       </form>
     </div>
   )

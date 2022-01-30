@@ -1,11 +1,10 @@
 import React from 'react'
-//import { useDispatch, useSelector } from 'react-redux'
-//import { likeExisting } from '../reducers/blogReducer'
 import { useState } from 'react'
 import { setNotification } from '../reducers/ilmoitusReducer'
 import { useDispatch } from 'react-redux'
 import { likeExisting } from '../reducers/blogReducer'
 import blogService from '../services/blogs'
+import { Button } from '@material-ui/core'
 
 
 const Blog = ({ blog, handleDeletePost, username }) => {
@@ -46,18 +45,18 @@ const Blog = ({ blog, handleDeletePost, username }) => {
   return (
     <div id='blogi' style={blogStyle}>
       <div>
-        {blog.title} by {blog.author} <button onClick={handleSetViewState}>{viewState ? 'Piilota tiedot' : 'Näytä tiedot'}</button>
+        {blog.title} by {blog.author} <Button onClick={handleSetViewState}>{viewState ? 'Piilota tiedot' : 'Näytä tiedot'}</Button>
       </div>
 
       {viewState && // renderöidään ehdollisesti kaikki tiedot
         <div>
-          <b>{blog.likes}</b> tykkäystä <button onClick={incrementLikes}>Tykkää</button><br />
+          <b>{blog.likes}</b> tykkäystä <Button onClick={incrementLikes}>Tykkää</Button><br />
           Osoitteessa {blog.url}
         </div>
       }
       {(viewState && (blog.user.username === username)) &&
         <div>
-          <button onClick={deletePost}>Poista</button>
+          <Button onClick={deletePost}>Poista</Button>
         </div>
       }
 
